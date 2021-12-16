@@ -28,4 +28,4 @@ class Score(Turtle):
 
     def game_over(self):
         self.goto(0, 0)
-        self.write(f"GAME OVER \nClick to restart.", move=False, align='center', font=('Arial', 20, 'normal'))
+        self.write(f"GAME OVER\nClick to restart.", move=False, align='center', font=('Arial', 20, 'normal'))
