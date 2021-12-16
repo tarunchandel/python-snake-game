@@ -19,7 +19,7 @@ class Score(Turtle):
     def print_score(self):
         self.clear()
         self.goto(0, self.HEIGHT / 2 - 30)
-        self.write(f"Score = {self.score}", move=False, align='center', font=('Arial', 20, 'normal'))
+        self.write(f"Score: {self.score}", move=False, align='center', font=('Arial', 20, 'normal'))
 
     def restart(self):
         self.score = 0
@@ -28,4 +28,4 @@ class Score(Turtle):
 
     def game_over(self):
         self.goto(0, 0)
-        self.write(f"GAME OVER\nClick to restart.", move=False, align='center', font=('Arial', 20, 'normal'))
+        self.write(f"GAME OVER \nClick to restart.", move=False, align='center', font=('Arial', 20, 'normal'))
