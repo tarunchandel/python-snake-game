@@ -11,24 +11,21 @@ HEIGHT = 600
 
 class Snake:
     def __init__(self):
-        self.snake_coordinates = [(0, 0)]
         self.snake_pieces = []
-        for _ in range(3):
-            self.add_snake_piece()
-        self.line_up_snake()
-        self.snake_head = self.snake_pieces[0]
+        self.snake_coordinates = []
+        self.setup_snake()
 
     def add_snake_piece(self):
         snake_piece = Turtle()
+        snake_piece.speed(0)
+        snake_piece.penup()
         snake_piece.color("white")
         snake_piece.shape("square")
-        snake_piece.penup()
-        snake_piece.speed(0)
         self.snake_pieces.append(snake_piece)
         self.snake_coordinates.append((self.snake_coordinates[-1][0] - 20, 0))
 
     def update_coordinates(self):
-        self.snake_coordinates.insert(0, self.snake_head.position())
+        self.snake_coordinates.insert(0, (round(self.snake_head.xcor()), round(self.snake_head.ycor())))
         self.snake_coordinates.pop()
 
     def line_up_snake(self):
@@ -58,8 +55,7 @@ class Snake:
             self.snake_head.setheading(RIGHT)
 
     def self_collision(self):
-        if self.snake_head.position() in self.snake_coordinates[1:len(self.snake_coordinates)]:
-            print("Collision")
+        if self.snake_head.position() in self.snake_coordinates[1:]:
             return True
         else:
             return False
@@ -79,3 +75,18 @@ class Snake:
             return False
         else:
             return True
+
+    def restart(self):
+        for snake in self.snake_pieces:
+            snake.hideturtle()
+        del self.snake_pieces[:]
+        del self.snake_coordinates[:]
+
+        self.setup_snake()
+
+    def setup_snake(self):
+        self.snake_coordinates = [(0, 0)]
+        for _ in range(3):
+            self.add_snake_piece()
+        self.line_up_snake()
+        self.snake_head = self.snake_pieces[0]

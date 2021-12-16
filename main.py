@@ -17,6 +17,18 @@ snake = Snake()
 food = Food()
 score = Score(HEIGHT)
 
+
+def game_reset():
+    snake.restart()
+    score.restart()
+    food.refresh()
+    screen.listen()
+    screen.onkey(snake.move_up, "Up")
+    screen.onkey(snake.move_down, "Down")
+    screen.onkey(snake.move_left, "Left")
+    screen.onkey(snake.move_right, "Right")
+
+
 screen.listen()
 screen.onkey(snake.move_up, "Up")
 screen.onkey(snake.move_down, "Down")
@@ -24,10 +36,32 @@ screen.onkey(snake.move_left, "Left")
 screen.onkey(snake.move_right, "Right")
 
 game_on = True
-while game_on:
-    game_on = snake.move()
-    food.eat_food(snake, score)
-    screen.update()
-    time.sleep(.1)
+game_continue = True
 
-screen.exitonclick()
+
+def go_on(x, y):
+    game_reset()
+    global game_on
+    game_on = True
+    screen.onclick(None)
+    play_game()
+
+
+def play_game():
+    global game_on
+    while game_on:
+        game_on = snake.move()
+        if snake.snake_head.distance(food) < 20:
+            food.refresh()
+            score.increase_score()
+            snake.add_snake_piece()
+            snake.line_up_snake()
+        screen.update()
+        time.sleep(.1)
+        if not game_on:
+            score.game_over()
+            screen.onclick(go_on)
+
+
+play_game()
+screen.mainloop()
